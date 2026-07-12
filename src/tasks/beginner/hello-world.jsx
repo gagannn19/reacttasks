@@ -21,7 +21,8 @@ export default function HelloWorld() {
       <div className="task-workspace">
         <div className="card">
           {/* TODO: build the JSX for "Hello World" here */}
-          <p>Your component markup goes here.</p>
+          <h1>Hello, World!</h1>
+          {/* <p>Your component markup goes here.</p> */}
         </div>
       </div>
     </div>
