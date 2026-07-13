@@ -1,4 +1,5 @@
 import TaskInfo from '../../components/TaskInfo.jsx';
+import goku from "./photos/goku.jpeg";
 
 const description = "Build a static card that displays your name, a short bio, and a photo/avatar placeholder.";
 
@@ -21,7 +22,9 @@ export default function PersonalProfileCard() {
       <div className="task-workspace">
         <div className="card">
           {/* TODO: build the JSX for "Personal Profile Card" here */}
-          <p>Your component markup goes here.</p>
+          <p>Name :- Gagan</p>
+          <p>I am learning React.js</p>
+          <img src={goku} alt='goku photo' />
         </div>
       </div>
     </div>
