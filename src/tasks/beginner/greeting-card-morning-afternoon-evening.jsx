@@ -8,6 +8,32 @@ const requirements = [
   "Handle the edge cases around midnight and noon"
 ];
 
+function Greeting() {
+  const now = new Date();
+  const hour = now.getHours();
+  let wish;
+
+  if(hour >= 4 && hour < 12) {
+    wish = "Good Morning";
+  }
+  else if(hour >= 12 && hour < 17) {
+    wish = "Good Afternoon";
+  }
+  else if(hour >= 17 && hour < 20) {
+    wish = "Good Evening";
+  }
+  else {
+    wish = "Good Night";
+  }
+
+
+  return(
+    <>
+      <h1>{wish}</h1>
+    </>
+  );
+}
+
 export default function GreetingCardMorningAfternoonEvening() {
   // TODO: accept props if this component should be reusable (e.g. { name, role, imageUrl })
   return (
@@ -20,8 +46,7 @@ export default function GreetingCardMorningAfternoonEvening() {
       />
       <div className="task-workspace">
         <div className="card">
-          {/* TODO: build the JSX for "Greeting Card (Morning/Afternoon/Evening)" here */}
-          <p>Your component markup goes here.</p>
+          <Greeting />
         </div>
       </div>
     </div>
