@@ -10,8 +10,13 @@ const requirements = [
 import { useState } from 'react';
 
 export default function Counter() {
-  // TODO: declare the state this task needs, e.g.
-  // const [value, setValue] = useState(initialValue);
+
+  let [value, setValue] = useState(0);
+
+  function increase() {
+    setValue(value+1);
+  }
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +27,8 @@ export default function Counter() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render UI driven by state, plus controls that call your setters */}
-          <p>Your code here.</p>
+          <p>{value}</p>
+          <button onClick={increase}>+</button>
         </div>
       </div>
     </div>
