@@ -10,11 +10,11 @@ const requirements = [
 import { useState } from 'react';
 
 export default function ClickEventDemo() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
+  const [count, setCount] = useState(0); // TODO: rename/shape this for the task
 
   // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
   function handleEvent(event) {
-    // TODO
+    setCount(count+1);
   }
   return (
     <div className="task-page">
@@ -30,6 +30,7 @@ export default function ClickEventDemo() {
           <button className="btn" onClick={handleEvent}>
             Trigger
           </button>
+          <p id='para'>Button Clicked {count} times...</p>
         </div>
       </div>
     </div>
