@@ -8,8 +8,21 @@ const requirements = [
   "Support at least two sizes via a size prop"
 ];
 
-export default function AvatarComponent() {
-  // TODO: accept props if this component should be reusable (e.g. { name, role, imageUrl })
+function Avatar({name,imgUrl, size}) {
+
+  function initials(name) {
+    return name.split(" ").map(word => word[0]).join("").toUpperCase();
+  }
+
+  return (
+    <>
+      <p>{name}</p>
+      {imgUrl ? <img src={imgUrl} height={size=="small" ? 40 : 80}></img> : initials(name)}
+    </>
+  );
+}
+
+export default function AvatarComponent({name, imgUrl, size}) {
   return (
     <div className="task-page">
       <TaskInfo
@@ -20,10 +33,11 @@ export default function AvatarComponent() {
       />
       <div className="task-workspace">
         <div className="card">
-          {/* TODO: build the JSX for "Avatar Component" here */}
-          <p>Your component markup goes here.</p>
+          <Avatar name="Gagan" imgUrl="https://www.pngitem.com/pimgs/m/54-541567_dragon-ball-goku-petit-hd-png-download.png" size="small" />
         </div>
       </div>
     </div>
   );
 }
+
+
