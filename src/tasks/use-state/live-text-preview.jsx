@@ -9,6 +9,22 @@ const requirements = [
 ];
 import { useState } from 'react';
 
+function Preview() {
+  const [text, setText] = useState("");
+
+  function show(e) {
+    setText(e.target.value);
+  }
+  return(
+    <>
+      <textarea value={text} placeholder='Enter Something...' onChange={show}>
+
+      </textarea>
+      <p style={{border:"1px solid white", padding:"3px"}}>{text === "" ? "Start Typing..." : text}</p>
+    </>
+  );
+}
+
 export default function LiveTextPreview() {
   // TODO: declare the state this task needs, e.g.
   // const [value, setValue] = useState(initialValue);
@@ -22,8 +38,7 @@ export default function LiveTextPreview() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render UI driven by state, plus controls that call your setters */}
-          <p>Your code here.</p>
+          <Preview />
         </div>
       </div>
     </div>
