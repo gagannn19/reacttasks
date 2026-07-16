@@ -65,8 +65,6 @@ function Likebutton(){
 }
 
 export default function LikeButton() {
-  // TODO: declare the state this task needs, e.g.
-  // const [value, setValue] = useState(initialValue);
   return (
     <div className="task-page">
       <TaskInfo
