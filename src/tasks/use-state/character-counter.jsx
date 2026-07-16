@@ -9,6 +9,21 @@ const requirements = [
 ];
 import { useState } from 'react';
 
+function TextCount() {
+  const [text, setText] = useState("");
+
+  function countcount(e) {
+    setText(e.target.value);
+  }
+  
+  return (
+    <>
+      <textarea value={text} placeholder='Write a message...' onChange={countcount} style={{color: text.length>=40 ? "red" : "white"}}  />
+      <p style={{color: "white"}}>{text.length}/50</p>
+    </>
+  );
+}
+
 export default function CharacterCounter() {
   // TODO: declare the state this task needs, e.g.
   // const [value, setValue] = useState(initialValue);
@@ -22,8 +37,7 @@ export default function CharacterCounter() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render UI driven by state, plus controls that call your setters */}
-          <p>Your code here.</p>
+          <TextCount />
         </div>
       </div>
     </div>
