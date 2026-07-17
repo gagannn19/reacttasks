@@ -9,9 +9,51 @@ const requirements = [
 ];
 import { useState } from 'react';
 
+function Convertor() {
+  const [c, setc] = useState("");
+  const [f, setf] = useState("");
+
+  function ctof(e) {
+    const value = e.target.value;
+    setc(value);
+
+    if (value === "" || isNaN(value)) {
+      setf("");
+      return;
+    }
+    
+    setf((Number(value) * 9 / 5) + 32);
+  }
+
+  function ftoc(e) {
+    const value = e.target.value;
+    setf(value);
+
+    if (value === "" || isNaN(value)) {
+      setc("");
+      return;
+    }
+
+    setc((Number(value) - 32) * 5 / 9);
+  }
+
+  return (
+    <>
+      <label>
+        Celcius :-  
+        <input type='text' value={c} onChange={ctof}></input>
+      </label>
+      <label>
+        Fahrenheit :- 
+        <input type='text' value={f} onChange={ftoc}></input>
+      </label>
+
+    </>
+  );
+}
+
 export default function TemperatureConverter() {
-  // TODO: declare the state this task needs, e.g.
-  // const [value, setValue] = useState(initialValue);
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +64,7 @@ export default function TemperatureConverter() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render UI driven by state, plus controls that call your setters */}
-          <p>Your code here.</p>
+          <Convertor />
         </div>
       </div>
     </div>
