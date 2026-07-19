@@ -41,11 +41,8 @@ function Form() {
     }
     else {
       setupdate("Invalid Email")
-    }
-      
+    }    
   }
-
-  
 
   return (
     <form onSubmit={handlechange}>
