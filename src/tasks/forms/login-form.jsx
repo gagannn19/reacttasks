@@ -9,19 +9,59 @@ const requirements = [
 ];
 import { useState } from 'react';
 
-export default function LoginForm() {
-  // TODO: add one useState per field this form needs (or a single formData object)
-  const [formData, setFormData] = useState({});
+function Form() {
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    // TODO: update formData for this field
+  const [formdata, setformdata] = useState({});
+  const [update, setupdate] = useState("");
+
+  function formchange(event) {
+    const {name, value} = event.target;
+
+    const newformdata = {
+      ...formdata,
+      [name] : value
+    }
+
+    setformdata(newformdata);
   }
 
-  function handleSubmit(event) {
+  function handlechange(event) {
     event.preventDefault();
-    // TODO: validate and handle the submitted data
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(formdata.email === "") {
+      setupdate("Please fill all the fields...")
+      return;
+    }
+    if(formdata.password === ""){
+      setupdate("Please fill all the fields...")
+      return;
+    }
+    if(emailRegex.test(formdata.email)) {
+      setupdate("Success");
+    }
+    else {
+      setupdate("Invalid Email")
+    }
+      
   }
+
+  
+
+  return (
+    <form onSubmit={handlechange}>
+      <label style={{display:"block", margin:"10px"}}>Enter Your Email :-
+        <input name='email' value={formdata.email} onChange={formchange}></input>
+      </label>
+      <label style={{display:"block", margin:"10px"}}>Enter Your Password :-
+        <input name='password' value={formdata.password} onChange={formchange}></input>
+      </label>
+      <button type='submit' style={{display:"block", margin:"10px"}}>Submit</button>
+      <p>{update}</p>
+    </form>
+  );
+}
+
+export default function LoginForm() {
   return (
     <div className="task-page">
       <TaskInfo
@@ -31,12 +71,7 @@ export default function LoginForm() {
         filePaths={["src/tasks/forms/login-form.jsx"]}
       />
       <div className="task-workspace">
-        <form className="stack" onSubmit={handleSubmit}>
-          {/* TODO: add labeled <input> fields, wiring value+onChange to formData */}
-          <button className="btn primary" type="submit">
-            Submit
-          </button>
-        </form>
+        <Form />
       </div>
     </div>
   );
