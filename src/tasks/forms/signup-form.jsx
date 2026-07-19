@@ -23,8 +23,6 @@ export default function SignupForm() {
   const [checkconfirmpassword, setcheckconfirmpassword] = useState("");
   const [submit, setsubmit] = useState("");
 
-
-
   function handleChange(event) {
     const { name, value } = event.target;
     // TODO: update formData for this field

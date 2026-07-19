@@ -8,6 +8,15 @@ const requirements = [
   "Forward any other native button props (e.g. disabled, type)"
 ];
 
+function Button(props) {
+  return (  
+    <>
+      <button onclick={props.onclik}>{props.children}</button>
+      
+    </>
+  );
+}
+
 export default function ReusableButtonComponent() {
   // TODO: accept props if this component should be reusable (e.g. { name, role, imageUrl })
   return (
@@ -20,8 +29,9 @@ export default function ReusableButtonComponent() {
       />
       <div className="task-workspace">
         <div className="card">
-          {/* TODO: build the JSX for "Reusable Button Component" here */}
-          <p>Your component markup goes here.</p>
+          <Button name="Gagan" onclik={function() {
+            props.name = props.name+props.name
+          } }/>
         </div>
       </div>
     </div>
