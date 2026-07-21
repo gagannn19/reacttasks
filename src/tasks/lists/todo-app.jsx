@@ -10,17 +10,19 @@ const requirements = [
 import { useState } from 'react';
 
 export default function TodoApp() {
-  const [items, setItems] = useState([
-    // TODO: seed a few starter items relevant to "Todo App"
-  ]);
 
-  function handleAdd(item) {
-    // TODO: add item to items
-  }
+  const [task, setTask] = useState("");
+  const [list, setList] = useState([]);
 
-  function handleRemove(id) {
-    // TODO: remove item by id from items
+  function plusClicked() {
+    setList(prev => [...prev,task]);
+    setTask("");
   }
+  function minusClicked(id) {
+    const newList = list.filter((task, index) => id !== index);
+    setList(newList);
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -30,10 +32,25 @@ export default function TodoApp() {
         filePaths={["src/tasks/lists/todo-app.jsx"]}
       />
       <div className="task-workspace">
-        <div className="stack">
-          {/* TODO: render items.map(...) as a list, plus add/remove controls */}
-          <p>{items.length} items</p>
-        </div>
+
+        <label>
+          Task
+          <input name='task' value={task} onChange={(e) => setTask(e.target.value)}></input>
+        </label>
+        <button onClick={plusClicked}>+</button>
+
+
+          <div>
+            {/* {list} */}
+            {list.map((task,id) => 
+              <div key={id} style={{display:"flex", flexDirection:"row", alignItems:"center", gap:"10px"}}>
+                <input type='checkbox'></input>
+                <p>{task}</p>
+                <button onClick={()=>minusClicked(id)}>-</button>
+              </div>
+            )}
+          </div>
+
       </div>
     </div>
   );
