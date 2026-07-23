@@ -10,17 +10,39 @@ const requirements = [
 import { useState } from 'react';
 
 export default function StudentList() {
-  const [items, setItems] = useState([
-    // TODO: seed a few starter items relevant to "Student List"
-  ]);
 
-  function handleAdd(item) {
-    // TODO: add item to items
-  }
+  const [formData, setFormData] = useState({
+    name : "",
+    grade : ""
+  })
+  const [list, setList] = useState([]);
 
-  function handleRemove(id) {
-    // TODO: remove item by id from items
+  function changeFormData(event) {
+    const {name, value} = event.target;
+    const newFormData = {
+      ...formData,
+      [name] : value
   }
+    setFormData(newFormData);
+  }
+  function addClicked() {
+    const newList = [
+      ...list,
+      formData
+    ]
+    setList(newList);
+    setFormData({
+      name:"",
+      grade:""
+    })
+  }
+  function removeClicked(id) {
+    console.log(list)
+    const newList = list.filter((item,index) => id !== index)
+    console.log(newList);
+    setList(newList);
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -31,8 +53,29 @@ export default function StudentList() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render items.map(...) as a list, plus add/remove controls */}
-          <p>{items.length} items</p>
+          
+          <div>
+            <h2>ADD STUDENT FORM</h2>
+            <label>
+              Name :- 
+              <input name='name' value={formData.name} onChange={changeFormData}></input>
+            </label>
+            <label>
+              Grade :-
+              <input name='grade' value={formData.grade} onChange={changeFormData}></input>
+            </label>
+            <button onClick={addClicked}>ADD</button>
+          </div>
+
+          {list.map((item,id) => (
+            <div key={id}>
+              <p>Name :- {item.name}</p>
+              <p>Grade :- {item.grade}</p>
+              <button onClick={()=>removeClicked(id)}>REMOVE</button>
+            </div>
+          ))}
+
+
         </div>
       </div>
     </div>
