@@ -10,15 +10,17 @@ const requirements = [
 import { useMemo, useState } from 'react';
 
 export default function SearchUsers() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Search Users"
-  ]);
-  const [query, setQuery] = useState('');
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  const usersList = ["Gagan", "Priyanka", "Rani", "Prachi", "Ayush", "Shreyas"];
+  const [search, setSearch] = useState("");
+  const updatedList = usersList.filter((users,id)=>(
+    users.toLowerCase().includes(search.toLowerCase())
+  ))
+
+  function changeSearch(event) {
+    setSearch(event.target.value);
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -29,13 +31,14 @@ export default function SearchUsers() {
       />
       <div className="task-workspace">
         <div className="stack">
-          <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {/* TODO: render visibleItems */}
+          <div>
+            <input placeholder='Search...' name='search' value={search} onChange={changeSearch}></input>
+          </div>
+          <div>
+            {updatedList.length > 0 ? updatedList.map((users, id) => (
+              <p key={id}>{users}</p>
+            )) : <p>No Matches Found</p>}
+          </div>
         </div>
       </div>
     </div>
