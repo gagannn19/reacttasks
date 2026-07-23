@@ -20,7 +20,6 @@ export default function EmployeeDirectory() {
     { name: "Nikhil", department: "Cleaning", role: "Cleaner" }
   ];
 
-  // Get unique departments
   const departmentList = [...new Set(employeeList.map(employee => employee.department))];
 
   function buttonTextClicked() {
