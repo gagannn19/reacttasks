@@ -10,17 +10,43 @@ const requirements = [
 import { useState } from 'react';
 
 export default function MovieList() {
-  const [items, setItems] = useState([
-    // TODO: seed a few starter items relevant to "Movie List"
-  ]);
 
-  function handleAdd(item) {
-    // TODO: add item to items
+  const movieList = [
+    {
+      title: "3 Idiots",
+      year: 2009,
+      rating: 8.4
+    },
+    {
+      title: "Inception",
+      year: 2010,
+      rating: 8.8
+    },
+    {
+      title: "Interstellar",
+      year: 2014,
+      rating: 8.7
+    },
+    {
+      title: "The Dark Knight",
+      year: 2008,
+      rating: 9.0
+    },
+    {
+      title: "Dangal",
+      year: 2016,
+      rating: 8.3
+    }
+  ];
+  const [buttonText, setButtonText] = useState("SHOW");
+  let sorted = 0;
+  const newMovieList = [...movieList].sort((a,b) => b.rating-a.rating)
+
+
+  function buttonClicked() {
+    setButtonText(buttonText === "SHOW" ? "HIDE" : "SHOW");
   }
 
-  function handleRemove(id) {
-    // TODO: remove item by id from items
-  }
   return (
     <div className="task-page">
       <TaskInfo
@@ -31,8 +57,20 @@ export default function MovieList() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render items.map(...) as a list, plus add/remove controls */}
-          <p>{items.length} items</p>
+          <div>
+            <button onClick={buttonClicked}>{buttonText}</button>
+          </div>
+          {
+            buttonText === "HIDE" ? 
+            newMovieList.map((movie,id) => (
+              <div key={id}>
+                <p>Movie Name :- {movie.title}</p>
+                <p>Movie Year :- {movie.year}</p>
+                <p>Movie Rating :- {movie.rating}</p>
+              </div>
+            )) :
+            <div></div>
+          }
         </div>
       </div>
     </div>
