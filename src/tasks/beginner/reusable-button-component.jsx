@@ -8,17 +8,47 @@ const requirements = [
   "Forward any other native button props (e.g. disabled, type)"
 ];
 
-function Button(props) {
-  return (  
-    <>
-      <button onclick={props.onclik}>{props.children}</button>
-      
-    </>
-  );
+function Button({children, onClick, variant = "primary" , ...props}) {
+
+  const styles = {
+    primary: {
+      backgroundColor: "#2563eb",
+      color: "white",
+      border: "none",
+      padding: "10px 20px",
+      borderRadius: "6px",
+      cursor: "pointer",
+      marginRight: "10px",
+    },
+    secondary: {
+      backgroundColor: "#e5e7eb",
+      color: "#111827",
+      border: "1px solid #9ca3af",
+      padding: "10px 20px",
+      borderRadius: "6px",
+      cursor: "pointer",
+      marginRight: "10px",
+    },
+  };
+
+  return (
+    <button onClick={onClick} style={styles[variant]} {...props}>
+      {children}
+    </button>
+  )
 }
 
+
+
 export default function ReusableButtonComponent() {
-  // TODO: accept props if this component should be reusable (e.g. { name, role, imageUrl })
+  function handlePrimaryClick() {
+    alert("Primary Button Clicked!");
+  }
+
+  function handleSecondaryClick() {
+    alert("Secondary Button Clicked!");
+  }
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -28,11 +58,37 @@ export default function ReusableButtonComponent() {
         filePaths={["src/tasks/beginner/reusable-button-component.jsx"]}
       />
       <div className="task-workspace">
-        <div className="card">
-          <Button name="Gagan" onclik={function() {
-            props.name = props.name+props.name
-          } }/>
-        </div>
+        <h2>Reusable Button Demo</h2>
+        <Button
+          variant="primary"
+          onClick={handlePrimaryClick}
+        >
+          Primary Button 
+        </Button>
+
+        <Button
+          variant="secondary"
+          onClick={handleSecondaryClick}
+        >
+          Secondary Button
+        </Button>
+
+        <Button
+          variant="primary"
+          disabled
+        >
+          Disabled Button
+        </Button>
+
+        <Button
+          variant="secondary"
+          type="submit"
+          title="This is a submit button"
+          onClick={() => alert("Submit Button")}
+        >
+          Submit Button
+        </Button>
+
       </div>
     </div>
   );
