@@ -10,12 +10,26 @@ const requirements = [
 import { useState } from 'react';
 
 export default function KeyboardEventTracker() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const [keys,setKeys] = useState("");
+  const [keyName, setKeyName] = useState("");
+  const [keyCode, setKeyCode] = useState("");
+  const [message, setMessage] = useState("");
+
+  function changeKeys(event) {
+    setKeys(event.target.value);
   }
+  function keyDown(event) {
+    setKeyName(event.key);
+    setKeyCode(event.code);
+    if(event.key.length > 1) {
+      setMessage("special key is pressed")
+    }
+    else {
+      setMessage("key is pressed")
+    }
+  }
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -26,10 +40,9 @@ export default function KeyboardEventTracker() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+          <input onKeyDown={keyDown} name='keys' value={keys} onChange={changeKeys}></input>
+          <p>{keyName} ...  {message}</p>
+          <p>Code :- {keyCode}</p>
         </div>
       </div>
     </div>
