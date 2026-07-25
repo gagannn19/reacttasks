@@ -10,12 +10,17 @@ const requirements = [
 import { useState } from 'react';
 
 export default function MouseHoverBox() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const [styling, setStyling] = useState({border:"5px solid white", height:"100px", width:"100px", background:"white"})
+
+  function mouseEntered() {
+    setStyling({border:"5px solid red", height:"100px", width:"100px", background:"red"})
   }
+
+  function mouseLeaved() {
+    setStyling({border:"5px solid white", height:"100px", width:"100px", background:"white"})
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -26,10 +31,9 @@ export default function MouseHoverBox() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+          <div style={styling} onMouseEnter={mouseEntered} onMouseLeave={mouseLeaved}>
+
+          </div>
         </div>
       </div>
     </div>
