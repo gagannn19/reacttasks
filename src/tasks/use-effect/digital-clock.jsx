@@ -1,4 +1,5 @@
 import TaskInfo from '../../components/TaskInfo.jsx';
+import { useEffect, useState } from 'react';
 
 const description = "Display the current time and update it every second.";
 
@@ -7,19 +8,26 @@ const requirements = [
   "Clean up the interval on unmount",
   "Format the time as HH:MM:SS"
 ];
-import { useEffect, useState } from 'react';
 
 export default function DigitalClock() {
-  const [data, setData] = useState(null);
+
+  // Store the current time
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
 
+    // Start the interval once
+    const intervalId = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+
+    // Cleanup: stop the interval when the component unmounts
     return () => {
-      // TODO: cleanup here if needed
+      clearInterval(intervalId);
     };
+
   }, []);
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -28,11 +36,9 @@ export default function DigitalClock() {
         requirements={requirements}
         filePaths={["src/tasks/use-effect/digital-clock.jsx"]}
       />
+
       <div className="task-workspace">
-        <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
-        </div>
+        <h1>{time}</h1>
       </div>
     </div>
   );
