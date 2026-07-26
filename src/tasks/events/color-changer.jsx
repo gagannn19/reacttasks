@@ -10,12 +10,13 @@ const requirements = [
 import { useState } from 'react';
 
 export default function ColorChanger() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const [color, setColor] = useState("white");
+
+  function changeColor(event) {
+    setColor(event.target.value);
   }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -26,10 +27,11 @@ export default function ColorChanger() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+          <div style={{width:"100px", height:"100px", background:color}}></div>
+          <button onClick={changeColor} value={"red"}>Red</button>
+          <button onClick={changeColor} value={"blue"}>Blue</button>
+          <button onClick={changeColor} value={"green"}>Green</button>
+          <button onClick={changeColor} value={"white"}>White</button>
         </div>
       </div>
     </div>
