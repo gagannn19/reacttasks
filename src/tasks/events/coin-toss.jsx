@@ -10,12 +10,22 @@ const requirements = [
 import { useState } from 'react';
 
 export default function CoinToss() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const [coin, setCoin] = useState("");
+  const [head, setHead] = useState(0);
+  const [tail, setTail] = useState(0);
+
+  function flipCoinClicked() {
+    const flipCoin = Math.random() > 0.5 ? "Head" : "Tail";
+    setCoin(flipCoin)
+    if(flipCoin == "Head") {
+      setHead(prev => prev+1);
+    }
+    else {
+      setTail (prev => prev+1);
+    }
   }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -26,10 +36,10 @@ export default function CoinToss() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+          <button onClick={flipCoinClicked}>Flip Coin</button>
+          <p>{coin}</p>
+          <p>Head :- {head}</p>
+          <p>Tail :- {tail}</p>
         </div>
       </div>
     </div>
