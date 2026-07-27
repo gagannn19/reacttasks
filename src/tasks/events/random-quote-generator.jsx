@@ -10,12 +10,19 @@ const requirements = [
 import { useState } from 'react';
 
 export default function RandomQuoteGenerator() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const quoteList = ["Arise, awake and stop not til the goal is reached", "To observe without judgement is the highest form of intelligence", "The mind is. beautiful servant but a dangerous master", "Beauty is not in the face, it is light in the heart", "Be your own light"];
+  const authorlist = ["Swami Vivekanand", "Jiddu Krishnamurti", "OSHO", "Khalil Gibran", "Buddha"];
+  const [number, setNumber] = useState();
+
+  function showQuoteClicked() {
+    let randomNumber = Math.floor(Math.random()*(quoteList.length));
+    while(randomNumber == number) {
+      randomNumber = Math.floor(Math.random()*(quoteList.length))
+    }
+    setNumber(randomNumber);
   }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -26,10 +33,10 @@ export default function RandomQuoteGenerator() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+          <button onClick={showQuoteClicked}>SHOW QUOTE</button>
+          <p>{quoteList[number]}</p>
+          <p>{authorlist[number]}</p>
+
         </div>
       </div>
     </div>
