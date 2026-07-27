@@ -10,12 +10,19 @@ const requirements = [
 import { useState } from 'react';
 
 export default function RandomBackgroundGenerator() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const [color,setColor] = useState("RRGGBB");
+  const hexValue = "0123456789ABCDEF";
+  const [rndm, setRandom] = useState("");
+
+  function changeColorClicked() {
+    let random = "#";
+    for(let i = 0; i<6; i++) {
+      random = random + hexValue[Math.floor(Math.random() * 16)]
+    }
+    setRandom(random);
   }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -24,12 +31,10 @@ export default function RandomBackgroundGenerator() {
         requirements={requirements}
         filePaths={["src/tasks/events/random-background-generator.jsx"]}
       />
-      <div className="task-workspace">
+      <div className="task-workspace" style={{ border:"2px solid white", background:rndm}}>
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+            <button onClick={changeColorClicked}>Change Color</button>
+            <p>{rndm}</p>
         </div>
       </div>
     </div>
