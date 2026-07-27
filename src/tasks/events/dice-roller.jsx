@@ -10,11 +10,24 @@ const requirements = [
 import { useState } from 'react';
 
 export default function DiceRoller() {
-  const [state, setState] = useState(null); // TODO: rename/shape this for the task
 
-  // TODO: implement the event handler(s) this task needs (onClick/onMouseEnter/onKeyDown/etc.)
-  function handleEvent(event) {
-    // TODO
+  const [pText, setPText] = useState("");
+  const [number, setNumber] = useState();
+  const numberList = [1,2,3,4,5,6];
+  const diceImage = ["https://img.magnific.com/free-vector/casino-background-design_1314-103.jpg?semt=ais_hybrid&w=740&q=80","https://png.pngtree.com/png-vector/20190114/ourmid/pngtree-vector-dice-one-icon-png-image_313036.jpg", "https://www.svgrepo.com/show/320118/inverted-dice-2.svg", "https://cdn.pixabay.com/photo/2014/04/03/11/56/dice-312624_1280.png", "https://static.vecteezy.com/system/resources/previews/068/739/003/non_2x/minimalist-outline-dice-with-four-dots-for-game-and-chance-icon-vector.jpg", "https://cdn-icons-png.flaticon.com/512/51/51419.png", "https://thumbs.dreamstime.com/b/red-dice-games-casinos-points-d-illustration-isolation-red-dice-games-casinos-points-d-rendering-isolation-170220936.jpg"]
+  const [isRolling, setIsRolling] = useState(false);
+
+
+  function rollClicked() {
+    setIsRolling(true);
+    setPText("... Dice is Rolling ...")
+    setNumber(0);
+    setTimeout(()=>{
+      setIsRolling(false);
+      const num = numberList[Math.floor(Math.random()*6)]
+      setNumber(num);
+      setPText(num);
+    },500)
   }
   return (
     <div className="task-page">
@@ -26,10 +39,9 @@ export default function DiceRoller() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: attach handleEvent to the right JSX element/event */}
-          <button className="btn" onClick={handleEvent}>
-            Trigger
-          </button>
+          <button disabled={isRolling} onClick={rollClicked}>ROLL</button>
+          <p>{pText}</p>
+          <img src={diceImage[number]} style={{height:"100px", width:"100px"}}></img>
         </div>
       </div>
     </div>
