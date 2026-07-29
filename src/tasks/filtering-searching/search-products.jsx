@@ -10,15 +10,38 @@ const requirements = [
 import { useMemo, useState } from 'react';
 
 export default function SearchProducts() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Search Products"
-  ]);
-  const [query, setQuery] = useState('');
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  const productsList = [
+    {
+      id: 1,
+      name: "Laptop",
+      price: 50000
+    },
+    {
+      id: 2,
+      name: "Mobile",
+      price: 25000
+    },
+    {
+      id: 3,
+      name: "Headphones",
+      price: 2000
+    },
+    {
+      id: 4,
+      name: "Keyboard",
+      price: 1500
+    }
+  ];
+  const [search, setSearch] = useState("");
+  const newProductList = productsList.filter((product,id)=>(
+    product.name.toLowerCase().includes(search.toLowerCase())
+  ))
+
+  function changeSearch(event) {
+    setSearch(event.target.value);
+  }
+ 
   return (
     <div className="task-page">
       <TaskInfo
@@ -29,13 +52,20 @@ export default function SearchProducts() {
       />
       <div className="task-workspace">
         <div className="stack">
-          <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {/* TODO: render visibleItems */}
+          <div>
+            <input placeholder='Search...' name='search' value={search} onChange={changeSearch}></input>
+          </div>
+
+          <div>
+            {newProductList.map((product,id)=> {
+              return (
+                <p>
+                  {product.name} - ${product.price}
+                </p>
+              )
+            })}
+          </div>
+
         </div>
       </div>
     </div>
