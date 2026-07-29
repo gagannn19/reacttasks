@@ -10,18 +10,65 @@ const requirements = [
 import { useState } from 'react';
 
 export default function CreditCardForm() {
-  // TODO: add one useState per field this form needs (or a single formData object)
-  const [formData, setFormData] = useState({});
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    // TODO: update formData for this field
+  const [creditCardNumber, setCreditCardNumber] = useState("");
+  const [date, setDate] = useState("");
+  const [warn, setWarn] = useState("");
+
+  function chanegCreditCardNumber(event) {
+    const input = event.target.value;
+    let value = "";
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] !== " ") {
+        value += input[i];
+      }
+    }
+    if (!isNaN(value)) {
+      let newString = "";
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+          newString += " ";
+        }
+        newString += value[i];
+      }
+      setCreditCardNumber(newString);
+    }
+  }
+  function changeDate(event) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear() % 100;
+    const typed = event.target.value;
+    setDate(typed);
+    if (typed.length !== 5) {
+      setWarn("");
+      return;
+    }
+    if (typed[2] !== "/") {
+      setWarn("Enter date in MM/YY format");
+      return;
+    }
+    const typedMonth = Number(typed[0] + typed[1]);
+    const typedYear = Number(typed[3] + typed[4]);
+    if (isNaN(typedMonth) || isNaN(typedYear)) {
+      setWarn("Enter valid numbers");
+      return;
+    }
+    if (typedMonth < 1 || typedMonth > 12) {
+      setWarn("Enter a valid month");
+      return;
+    }
+    if (typedYear < currentYear) {
+      setWarn("Card has expired");
+      return;
+    }
+    if (typedYear === currentYear && typedMonth < currentMonth) {
+      setWarn("Card has expired");
+      return;
+    }
+    setWarn("");
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    // TODO: validate and handle the submitted data
-  }
   return (
     <div className="task-page">
       <TaskInfo
@@ -30,13 +77,20 @@ export default function CreditCardForm() {
         requirements={requirements}
         filePaths={["src/tasks/forms/credit-card-form.jsx"]}
       />
-      <div className="task-workspace">
-        <form className="stack" onSubmit={handleSubmit}>
-          {/* TODO: add labeled <input> fields, wiring value+onChange to formData */}
-          <button className="btn primary" type="submit">
-            Submit
-          </button>
-        </form>
+      <div className="task-workspace" style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+        <label>
+          Enter Card Number :-
+          <input name='creditCardNumber' value={creditCardNumber} onChange={chanegCreditCardNumber} maxLength={19}></input>
+        </label>
+        <label>
+          Enter Expiry Date :- 
+          <input type='text' placeholder='MM/YY' maxLength={5} value={date} onChange={changeDate}></input>
+          <p>{warn}</p>
+        </label>
+        <label>
+          Enter CVV :-
+          <input type='password' placeholder='xxx' maxLength={3}></input>
+        </label>
       </div>
     </div>
   );
