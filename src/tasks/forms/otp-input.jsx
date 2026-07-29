@@ -10,18 +10,37 @@ const requirements = [
 import { useState } from 'react';
 
 export default function OTPInput() {
-  // TODO: add one useState per field this form needs (or a single formData object)
-  const [formData, setFormData] = useState({});
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    // TODO: update formData for this field
-  }
+  const [otp, setOtp] = useState({
+    otp1 : "",
+    otp2 : "",
+    otp3 : "",
+    otp4 : "",
+    otp5 : "",
+    otp6 : ""
+  })
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    // TODO: validate and handle the submitted data
+  function changeOtp(event) {
+    const {name,value} = event.target;
+    if(!isNaN(value)) {
+      setOtp({
+        ...otp,
+        [name] : value
+      })
+    }
   }
+  function nextSibling(event) {
+    if (event.target.value.length === 1 && event.target.nextElementSibling && !isNaN(event.target.value)) {
+      event.target.nextElementSibling.focus();
+    }
+  }
+  // function backSibling(event) {
+  //   if(event.target.value.length === 0 && event.target.previousElementSibling) {
+  //     event.target.previousElementSibling.focus();
+  //   }
+  // }
+  
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -31,12 +50,63 @@ export default function OTPInput() {
         filePaths={["src/tasks/forms/otp-input.jsx"]}
       />
       <div className="task-workspace">
-        <form className="stack" onSubmit={handleSubmit}>
-          {/* TODO: add labeled <input> fields, wiring value+onChange to formData */}
-          <button className="btn primary" type="submit">
-            Submit
-          </button>
-        </form>
+        <input style={{height:"50px", width:"50px", padding:"15px", margin:"10px", fontSize:"30px"}} maxLength={1} name='otp1' value={otp.otp1} onChange={(event) => {
+          changeOtp(event);
+          nextSibling(event);
+        }} onKeyDown={(event)=>{
+          if (event.key === "Backspace" && event.target.value === "") {
+            event.preventDefault();
+            event.target.previousElementSibling?.focus();
+          }
+        }}></input>
+        <input style={{height:"50px", width:"50px", padding:"15px", margin:"10px", fontSize:"30px"}} maxLength={1} name='otp2' value={otp.otp2} onChange={(event) => {
+          changeOtp(event);
+          nextSibling(event);
+        }} onKeyDown={(event)=>{
+          if (event.key === "Backspace" && event.target.value === "") {
+            event.preventDefault();
+            event.target.previousElementSibling?.focus();
+          }
+        }}></input>
+        <input style={{height:"50px", width:"50px", padding:"15px", margin:"10px", fontSize:"30px"}} maxLength={1} name='otp3' value={otp.otp3} onChange={(event) => {
+          changeOtp(event);
+          nextSibling(event);
+        }} onKeyDown={(event)=>{
+          if (event.key === "Backspace" && event.target.value === "") {
+            event.preventDefault();
+            event.target.previousElementSibling?.focus();
+          }
+        }}></input>
+        <input style={{height:"50px", width:"50px", padding:"15px", margin:"10px", fontSize:"30px"}} maxLength={1} name='otp4' value={otp.otp4} onChange={(event) => {
+          changeOtp(event);
+          nextSibling(event);
+        }} onKeyDown={(event)=>{
+          if (event.key === "Backspace" && event.target.value === "") {
+            event.preventDefault();
+            event.target.previousElementSibling?.focus();
+          }
+        }}></input>
+        <input style={{height:"50px", width:"50px", padding:"15px", margin:"10px", fontSize:"30px"}} maxLength={1} name='otp5' value={otp.otp5} onChange={(event) => {
+          changeOtp(event);
+          nextSibling(event);
+        }} onKeyDown={(event)=>{
+          if (event.key === "Backspace" && event.target.value === "") {
+            event.preventDefault();
+            event.target.previousElementSibling?.focus();
+          }
+        }}></input>
+        <input style={{height:"50px", width:"50px", padding:"15px", margin:"10px", fontSize:"30px"}} maxLength={1} name='otp6' value={otp.otp6} onChange={(event) => {
+          changeOtp(event);
+          nextSibling(event);
+        }} onKeyDown={(event)=>{
+          if (event.key === "Backspace" && event.target.value === "") {
+            event.preventDefault();
+            event.target.previousElementSibling?.focus();
+          }
+        }}></input>
+
+        <p>OTP :- {otp.otp1 + otp.otp2 + otp.otp3 + otp.otp4 + otp.otp5 + otp.otp6}</p>
+
       </div>
     </div>
   );
