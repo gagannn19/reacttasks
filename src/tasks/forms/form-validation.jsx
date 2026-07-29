@@ -90,7 +90,6 @@ export default function FormValidation() {
     }
   }
  
-  
   return (
     <div className="task-page">
       <TaskInfo
