@@ -10,15 +10,36 @@ const requirements = [
 import { useMemo, useState } from 'react';
 
 export default function SortProducts() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Sort Products"
-  ]);
-  const [query, setQuery] = useState('');
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  const originalProductArray = [
+    {name : "jeans", price : 800},
+    {name : "shoe", price : 1300}, 
+    {name : "laptop", price : 80000},
+    {name : "creatine", price : 400},
+    {name : "bottle", price : 120}
+  ]
+  const [copyArray, setCopyArray] = useState(originalProductArray);
+  const [selectKey, setSelectKey] = useState("Name");
+  const [selectOrder, setSelectOrder] = useState("Ascending");
+
+  function handleChange() {
+    console.log(selectKey);
+    console.log(selectOrder);
+    const copy = [...originalProductArray];
+    if(selectKey === "Name" && selectOrder === "Ascending") {
+      setCopyArray(copy.sort((a,b) => a.name.localeCompare(b.name)));
+    }
+    else if(selectKey === "Name" && selectOrder === "Descending") {
+      setCopyArray(copy.sort((a,b)=>b.name.localeCompare(a.name)))
+    }
+    else if(selectKey === "Price" && selectOrder === "Ascending") {
+      setCopyArray(copy.sort((a,b) => a.price - b.price))
+    }
+    else if(selectKey === "Price" && selectOrder === "Descending") {
+      setCopyArray(copy.sort((a,b) => b.price - a.price))
+    }
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -28,14 +49,25 @@ export default function SortProducts() {
         filePaths={["src/tasks/filtering-searching/sort-products.jsx"]}
       />
       <div className="task-workspace">
-        <div className="stack">
-          <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {/* TODO: render visibleItems */}
+        <h3>CHOOSE THE SORTING...</h3>
+        <div style={{border:"1px solid white"}}>
+          <select onChange={(event)=>{setSelectKey(event.target.value)}} style={{margin:"20px"}}>
+            <option value={"Name"}>Name</option>
+            <option value={"Price"}>Price</option>
+          </select>
+          <select onChange={(event)=>{setSelectOrder(event.target.value)}} style={{margin:"20px"}}>
+            <option value={"Ascending"}>Ascending</option>
+            <option value={"Descending"}>Descending</option>
+          </select>
+          <button onClick={handleChange}>APPLY</button>
+        </div>
+        <div>
+          {copyArray.map((element,index)=>(
+            <div key={index}>
+              <p style={{display:"inline"}}>Name :- {element.name}...</p>
+              <p style={{display:"inline"}}>Price :- {element.price}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
