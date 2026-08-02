@@ -10,15 +10,32 @@ const requirements = [
 import { useMemo, useState } from 'react';
 
 export default function FilterByCategory() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Filter by Category"
-  ]);
-  const [query, setQuery] = useState('');
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  const products = [
+    { name: "Mobile", category: "Tech" },
+    { name: "Charger", category: "Tech" },
+    { name: "Jeans", category: "Clothing" },
+    { name: "Kurta", category: "Clothing" },
+    { name: "Apple", category: "Groceries" },
+    { name: "Oats", category: "Groceries" },
+    { name: "Protein Powder", category: "Groceries" }
+  ];
+  const [val, setVal] = useState(products.map(product => product.name));
+
+  function changeItem(event) {
+    if(event.target.value === "ALL") {
+      setVal(products.map(product => product.name));
+      return;
+    }
+    const categorized = products.filter((product, index)=>(
+      product.category === event.target.value
+    ))
+    const categorizedProduct = categorized.map((product) => (
+      product.name
+    ))
+    setVal(categorizedProduct);
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -28,14 +45,16 @@ export default function FilterByCategory() {
         filePaths={["src/tasks/filtering-searching/filter-by-category.jsx"]}
       />
       <div className="task-workspace">
-        <div className="stack">
-          <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {/* TODO: render visibleItems */}
+        <select onChange={changeItem}>
+          <option value={"ALL"}>ALL</option>
+          <option value={"Tech"}>Tech</option>
+          <option value={"Clothing"}>Clothing</option>
+          <option value={"Groceries"}>Groceries</option>
+        </select>
+        <div>
+          {val.map((item,index) => (
+            <p key={index}>{item}</p>
+          ))}
         </div>
       </div>
     </div>
