@@ -10,15 +10,39 @@ const requirements = [
 import { useMemo, useState } from 'react';
 
 export default function CountrySearch() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Country Search"
-  ]);
-  const [query, setQuery] = useState('');
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  const countries = [
+    { name: "India", flag: "🇮🇳", code: "IN" },
+    { name: "United States", flag: "🇺🇸", code: "US" },
+    { name: "Canada", flag: "🇨🇦", code: "CA" },
+    { name: "United Kingdom", flag: "🇬🇧", code: "GB" },
+    { name: "Australia", flag: "🇦🇺", code: "AU" },
+    { name: "Germany", flag: "🇩🇪", code: "DE" },
+    { name: "France", flag: "🇫🇷", code: "FR" },
+    { name: "Japan", flag: "🇯🇵", code: "JP" },
+    { name: "China", flag: "🇨🇳", code: "CN" },
+    { name: "Brazil", flag: "🇧🇷", code: "BR" },
+    { name: "Russia", flag: "🇷🇺", code: "RU" },
+    { name: "South Korea", flag: "🇰🇷", code: "KR" },
+    { name: "Italy", flag: "🇮🇹", code: "IT" },
+    { name: "Spain", flag: "🇪🇸", code: "ES" },
+    { name: "Mexico", flag: "🇲🇽", code: "MX" },
+    { name: "South Africa", flag: "🇿🇦", code: "ZA" },
+    { name: "New Zealand", flag: "🇳🇿", code: "NZ" },
+    { name: "Singapore", flag: "🇸🇬", code: "SG" },
+    { name: "United Arab Emirates", flag: "🇦🇪", code: "AE" },
+    { name: "Nepal", flag: "🇳🇵", code: "NP" }
+  ];
+  const [countriesCopy, setCountriesCopy] = useState(countries);
+  const [search, setSearch] = useState("");
+
+  function changeSearch(event) {
+    setSearch(event.target.value);
+    setCountriesCopy([...countries].filter((country)=>(
+      country.name.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase())
+    )))
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -28,15 +52,21 @@ export default function CountrySearch() {
         filePaths={["src/tasks/filtering-searching/country-search.jsx"]}
       />
       <div className="task-workspace">
-        <div className="stack">
-          <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {/* TODO: render visibleItems */}
+
+        <label>
+          Search Any Country :-
+          <input name='search' value={search} onChange={changeSearch}></input>
+        </label>
+
+        <div>
+          {countriesCopy.map((country, index)=>(
+            <div style={{display : "flex", flexDirection : "row", gap : "20px"}}>
+              <p>{country.flag}</p>
+              <p>{country.name}{`(${country.code})`}</p>
+            </div>
+          ))}
         </div>
+
       </div>
     </div>
   );
