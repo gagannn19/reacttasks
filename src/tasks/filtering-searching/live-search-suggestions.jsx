@@ -10,15 +10,44 @@ const requirements = [
 import { useMemo, useState } from 'react';
 
 export default function LiveSearchSuggestions() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Live Search Suggestions"
-  ]);
-  const [query, setQuery] = useState('');
+  
+  const randomWords = [
+    "Airplane",
+    "Bridge",
+    "Cloud",
+    "Diamond",
+    "Engine",
+    "Forest",
+    "Garden",
+    "Hammer",
+    "Island",
+    "Jungle",
+    "Kitchen",
+    "Laptop",
+    "Mountain",
+    "Notebook",
+    "Ocean",
+    "Pencil",
+    "Question",
+    "Rocket",
+    "School",
+    "Train",
+    "Universe",
+    "Village",
+    "Window",
+    "Xylophone",
+    "Yellow",
+    "Zoo"
+  ];
+  const [search, setSearch] = useState("");
+  const [dropMenu, setDropMenu] = useState([]);
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  function changeSearch(event) {
+    const val = event.target.value;
+    setSearch(val);
+    setDropMenu([...randomWords].filter((word)=>word.toLowerCase().includes(val.toLowerCase())).slice(0, 5))
+  }
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -28,14 +57,15 @@ export default function LiveSearchSuggestions() {
         filePaths={["src/tasks/filtering-searching/live-search-suggestions.jsx"]}
       />
       <div className="task-workspace">
-        <div className="stack">
-          <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {/* TODO: render visibleItems */}
+        <label>
+          Search Anything :- 
+          <input placeholder='Search...' value={search} onChange={changeSearch}></input>
+        </label>
+        <div>
+          {search.length > 0 ? dropMenu.map((word, index) => (
+            <p onClick={()=>{setSearch(word)}} key={index}>{word}</p>
+          )) :
+          ""}
         </div>
       </div>
     </div>
