@@ -1,4 +1,5 @@
 import TaskInfo from '../../components/TaskInfo.jsx';
+import { useMemo, useState } from 'react';
 
 const description = "Combine a search box and a sort control operating on the same list.";
 
@@ -7,18 +8,42 @@ const requirements = [
   "Order of operations should not matter (filter then sort)",
   "Use useMemo to avoid recomputing needlessly (bonus)"
 ];
-import { useMemo, useState } from 'react';
 
 export default function SearchSortCombined() {
-  const [items] = useState([
-    // TODO: seed sample data to filter/search/sort for "Search + Sort Combined"
-  ]);
-  const [query, setQuery] = useState('');
 
-  const visibleItems = useMemo(() => {
-    // TODO: filter/sort `items` based on `query` (and any other controls you add)
-    return items;
-  }, [items, query]);
+  const productsList = [
+    "Pen",
+    "Copy",
+    "Jeans",
+    "Bat",
+    "Protein",
+    "Creatine"
+  ];
+
+  const [search, setSearch] = useState("");
+  const [sorting, setSorting] = useState("As it is");
+
+  const copyList = useMemo(() => {
+
+    let result = productsList.filter(product =>
+      product.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (sorting === "Ascending") {
+      result = [...result].sort((a, b) =>
+        a.localeCompare(b)
+      );
+    }
+    else if (sorting === "Descending") {
+      result = [...result].sort((a, b) =>
+        b.localeCompare(a)
+      );
+    }
+
+    return result;
+
+  }, [search, sorting]);
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -27,16 +52,42 @@ export default function SearchSortCombined() {
         requirements={requirements}
         filePaths={["src/tasks/filtering-searching/search-sort-combined.jsx"]}
       />
+
       <div className="task-workspace">
-        <div className="stack">
+
+        <label style={{ margin: "10px" }}>
+          Search Your Product :-
           <input
-            className="input"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          {/* TODO: render visibleItems */}
+        </label>
+
+        <label style={{ margin: "10px" }}>
+          Choose Sorting :-
+          <select
+            value={sorting}
+            onChange={(e) => setSorting(e.target.value)}
+          >
+            <option>As it is</option>
+            <option>Ascending</option>
+            <option>Descending</option>
+          </select>
+        </label>
+
+        <div
+          style={{
+            border: "1px solid white",
+            margin: "20px",
+            padding: "25px"
+          }}
+        >
+          {copyList.map((product, index) => (
+            <p key={index}>{product}</p>
+          ))}
         </div>
+
       </div>
     </div>
   );
