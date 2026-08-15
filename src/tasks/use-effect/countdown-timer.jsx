@@ -7,19 +7,46 @@ const requirements = [
   "Tick down once per second using useEffect",
   "Stop at zero and show a 'done' message, cleaning up the interval"
 ];
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 
 export default function CountdownTimer() {
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
+  const [number, setNumber] = useState(0);
+  const [countDown, setCountDown] = useState("");
+  const [running, setRunning] = useState(false);
+  const [done, setDone] = useState(false);
 
-    return () => {
-      // TODO: cleanup here if needed
-    };
-  }, []);
+  function handleButtonClick() {
+    setCountDown(number);
+    setDone(false);
+    setRunning(true);
+  }
+
+  useEffect(()=>{
+
+    if(number <= 0) {
+      return
+    }
+
+    const intervalId = setInterval(()=>{
+      setCountDown(prev => {
+        if (prev <= 1) {
+          setDone(true);
+          setRunning(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000)
+
+    return ()=>{
+      clearInterval(intervalId)
+    }
+
+  },[running])
+
+  
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -29,10 +56,12 @@ export default function CountdownTimer() {
         filePaths={["src/tasks/use-effect/countdown-timer.jsx"]}
       />
       <div className="task-workspace">
-        <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
-        </div>
+        <label>
+          Give Time in Seconds
+          <input type='number' name='number' value={number} onChange={(event)=>setNumber(event.target.value)}></input>
+        </label>
+        <button onClick={handleButtonClick}>Start Timer</button>
+        <p>{done ? "Done" : countDown}</p>
       </div>
     </div>
   );
