@@ -11,13 +11,25 @@ import { useEffect, useState } from 'react';
 
 export default function FetchUsersAPI() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      setData(data)
+      setLoading(false)
+    })
+    .catch(error => {
+      setError(true)
+      setLoading(false)
+    })
 
     return () => {
-      // TODO: cleanup here if needed
+      
     };
   }, []);
   return (
@@ -30,8 +42,12 @@ export default function FetchUsersAPI() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
+          <p>{loading ? 'LOADING...' : error ? 'ERROR...' : data.map((dataObject, index)=>(
+            <div key={index}>
+              <p>{dataObject.name}</p>
+              <p>{dataObject.email}</p>
+            </div>
+          ))}</p>
         </div>
       </div>
     </div>
