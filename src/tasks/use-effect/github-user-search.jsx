@@ -10,16 +10,45 @@ const requirements = [
 import { useEffect, useState } from 'react';
 
 export default function GitHubUserSearch() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [username, setUsername] = useState("");
+  const [errorMessage, setErrorMessage] = useState("Error ... ");
 
-  useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
+  function handleOnClick() {
+    setError(false);
+    setErrorMessage("")
+    setLoading(true);
 
-    return () => {
-      // TODO: cleanup here if needed
-    };
-  }, []);
+    const url = `https://api.github.com/users/${username}`
+
+    fetch(url)
+    .then((response)=>{
+      if(!response.ok) {
+        if(response.status === 403) {
+          setErrorMessage("API request limit reached")
+        }
+        else if(response.status === 404) {
+          setErrorMessage("user not found")
+        }
+        else {
+          setErrorMessage("something went wrong")
+        }
+        setError(true);
+        throw new Error("Request Failed")
+      }
+      return response.json();
+    })
+    .then((data)=>{
+      setData(data);
+      setLoading(false)
+    })
+    .catch((error)=>{
+      setLoading(false)
+    })
+  }
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -30,8 +59,16 @@ export default function GitHubUserSearch() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
+          <label>
+            Enter Your Github Username :- <input type='text' name='username' value={username} onChange={(event)=>setUsername(event.target.value)}></input>
+            <button onClick={handleOnClick}>search</button>
+          </label>
+          <div>{loading ? "loading..." : error ? errorMessage : <div>
+            <p>{data.avatar_url}</p>
+            <p>{data.name}</p>
+            <p>{data.bio}</p>
+            <p>{data.public_repos}</p>
+          </div>}</div>
         </div>
       </div>
     </div>
