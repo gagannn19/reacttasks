@@ -10,16 +10,37 @@ const requirements = [
 import { useEffect, useState } from 'react';
 
 export default function RandomDogImage() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  function fetchfun() {
+    setLoading(true)
+    fetch("https://dog.ceo/api/breeds/image/random")
+    .then((res)=>{
+      return res.json()
+    })
+    .then((dogImageData)=>{
+      setData(dogImageData);
+      setLoading(false);
+    })
+    .catch((error)=>{
+      setError(true);
+      setLoading(false);
+    })
+  }
+
+  function btnClicked() {
+    fetchfun();
+  }
 
   useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
-
+    fetchfun();
     return () => {
-      // TODO: cleanup here if needed
+
     };
   }, []);
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -30,8 +51,9 @@ export default function RandomDogImage() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
+          <button onClick={()=>btnClicked()}>Dog Image</button>
+          {loading ? <p>loading ... </p> : error && <p>error ...</p>}
+          <img src={data.message} height={200} width={200}></img>
         </div>
       </div>
     </div>
