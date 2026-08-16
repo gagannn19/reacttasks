@@ -10,14 +10,30 @@ const requirements = [
 import { useEffect, useState } from 'react';
 
 export default function RandomCatFacts() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
+  const [err, setErr] = useState(false);
+  const [load, setLoad] = useState(false);
+
+  function fetchfun() {
+    setLoad(true);
+    fetch("https://catfact.ninja/fact")
+    .then((response)=>{
+      return response.json();
+    })
+    .then((returnedData)=>{
+      setData(returnedData);
+      setLoad(false);
+    })
+    .catch((error)=>{
+      setErr(true);
+      setLoad(false);
+    })
+  }
 
   useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
-
+    fetchfun();
     return () => {
-      // TODO: cleanup here if needed
+
     };
   }, []);
   return (
@@ -30,8 +46,9 @@ export default function RandomCatFacts() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
+          <button onClick={()=>{fetchfun()}}>More Thoughts</button>
+          {load ? <p>loading ...</p> : err ? <p>error ...</p> : <p>{data.fact}</p>}
+          
         </div>
       </div>
     </div>
