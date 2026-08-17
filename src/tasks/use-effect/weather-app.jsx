@@ -10,16 +10,31 @@ const requirements = [
 import { useEffect, useState } from 'react';
 
 export default function WeatherApp() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
+  const [err, setErr] = useState(false);
+  const [load, setLoad] = useState(false);
+  const [city, setCity] = useState("");
+  const apiKey = "516b440f4f9e946747a0f428c35d691c";
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
 
-  useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
+  function handleClick() {
+    setLoad(true);
+    fetch(url)
+    .then((res)=>{
+      return res.json();
+    })
+    .then((returnedData)=>{
+      setData(returnedData)
+      setLoad(false);
 
-    return () => {
-      // TODO: cleanup here if needed
-    };
-  }, []);
+    })
+    .catch(()=>{
+      setErr(true);
+      setLoad(false);
+
+    })
+  }
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -30,8 +45,16 @@ export default function WeatherApp() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
+          <label>Enter City :- <input type='text' name='city' value={city} onChange={(event)=>setCity(event.target.value)}></input> <button onClick={handleClick}>Submit</button></label>
+          {load ? <p>loading ... </p> : err ? <p>error ... </p> : data.name && (
+            <div>
+              <h2>{data.name}</h2>
+              <p>Temperature: {data.main?.temp}°C</p>
+              <p>Feels like: {data.main?.feels_like}°C</p>
+              <p>Condition: {data.weather?.[0]?.description}</p>
+              <p>Wind: {data.wind?.speed} m/s</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
