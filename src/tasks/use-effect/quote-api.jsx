@@ -10,16 +10,34 @@ const requirements = [
 import { useEffect, useState } from 'react';
 
 export default function QuoteAPI() {
-  const [data, setData] = useState(null);
 
+  const [data, setData] = useState({});
+  const [load, setLoad] = useState(false);
+  const [err, setErr] = useState(false);
+
+  function fetchfun() {
+    setLoad(true);
+    fetch("https://dummyjson.com/quotes/random")
+    .then((res)=>{
+      return res.json();
+    })
+    .then((quoteData)=>{
+      setLoad(false);
+      setData(quoteData);
+    })
+    .catch(()=>{
+      setLoad(false);
+      setErr(true)
+    })
+  }
+  
   useEffect(() => {
-    // TODO: run the side effect this task needs (timer, fetch, subscription...)
-    // Remember to return a cleanup function if you start an interval/timeout/subscription.
-
+    fetchfun();
     return () => {
-      // TODO: cleanup here if needed
+
     };
   }, []);
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -30,8 +48,8 @@ export default function QuoteAPI() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: render `data` / loading / error states */}
-          <p>Your code here.</p>
+          <p>{load ? "loading..." : err ? "error..." : data.quote}</p>
+          <button onClick={()=>{fetchfun()}}>Quote</button>
         </div>
       </div>
     </div>
