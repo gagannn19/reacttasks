@@ -10,9 +10,24 @@ const requirements = [
 import { useState } from 'react';
 
 export default function MultiPageWebsite() {
-  // This demo simulates multiple "pages" with local state so it can live on one route.
-  // In a full app you'd use <Routes>/<Route> (see src/App.jsx) instead of this switch.
   const [currentPage, setCurrentPage] = useState('home');
+  let pageContent;
+  if (currentPage === 'home') {
+    pageContent = <div>
+      <h1>HOME PAGE</h1>
+      <p>yeah its home...</p>
+    </div>;
+  } else if (currentPage === 'about') {
+    pageContent = <div>
+      <h1>About</h1>
+      <p>This is a react task</p>
+    </div>;
+  } else if (currentPage === 'contact') {
+    pageContent = <div>
+      <h1>Contact</h1>
+      <p>Ph. 8756746455</p>
+    </div>;
+  }
 
   // TODO: define the pages this task needs, e.g. { home: <Home />, about: <About /> }
   return (
@@ -26,9 +41,11 @@ export default function MultiPageWebsite() {
       <div className="task-workspace">
         <div className="stack">
           <div className="row">
-            {/* TODO: nav buttons that call setCurrentPage(...) */}
+            <button style={currentPage == 'home' ? {color:"red"} : {}} onClick={()=>setCurrentPage('home')}>HOME</button>
+            <button style={currentPage == 'about' ? {color:"red"} : {}} onClick={()=>setCurrentPage('about')}>ABOUT</button>
+            <button style={currentPage == 'contact' ? {color:"red"} : {}} onClick={()=>setCurrentPage('contact')}>CONTACT</button>
           </div>
-          {/* TODO: render the component for currentPage */}
+            {pageContent}
         </div>
       </div>
     </div>
