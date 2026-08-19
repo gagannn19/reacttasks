@@ -10,11 +10,22 @@ const requirements = [
 import { useState } from 'react';
 
 export default function Page404Page() {
-  // This demo simulates multiple "pages" with local state so it can live on one route.
-  // In a full app you'd use <Routes>/<Route> (see src/App.jsx) instead of this switch.
-  const [currentPage, setCurrentPage] = useState('home');
 
-  // TODO: define the pages this task needs, e.g. { home: <Home />, about: <About /> }
+  const [page, setPage] = useState('err');
+  let display;
+  if(page === 'err') {
+    display = <div>
+      <button onClick={()=>setPage('home')}>back</button>
+      <p>page not found</p>
+    </div>
+  }
+  else if(page === 'home') {
+    display = <div>
+      <h1>home page</h1>
+      <p>welcome to the home page</p>
+    </div>
+  }
+   
   return (
     <div className="task-page">
       <TaskInfo
@@ -25,10 +36,7 @@ export default function Page404Page() {
       />
       <div className="task-workspace">
         <div className="stack">
-          <div className="row">
-            {/* TODO: nav buttons that call setCurrentPage(...) */}
-          </div>
-          {/* TODO: render the component for currentPage */}
+          {display}
         </div>
       </div>
     </div>
