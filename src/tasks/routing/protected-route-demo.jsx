@@ -10,11 +10,27 @@ const requirements = [
 import { useState } from 'react';
 
 export default function ProtectedRouteDemo() {
-  // This demo simulates multiple "pages" with local state so it can live on one route.
-  // In a full app you'd use <Routes>/<Route> (see src/App.jsx) instead of this switch.
-  const [currentPage, setCurrentPage] = useState('home');
 
-  // TODO: define the pages this task needs, e.g. { home: <Home />, about: <About /> }
+  const [auth, setAuth] = useState(false);
+  const [page, setPage] = useState('login');
+  let display;
+  if(page === 'login') {
+    display = <div>
+      <label>
+        Enter Gmail :- <input type='email'></input>
+      </label>
+      <label>
+        Enter Password :- <input type='password'></input>
+      </label>
+      <button onClick={()=>{setPage('info'); setAuth(true)}}>Log In</button>
+    </div>
+  }
+  else if(page === 'info' && auth === true) {
+    display = <div>
+      <p>hulululu</p>
+    </div>
+  }
+ 
   return (
     <div className="task-page">
       <TaskInfo
@@ -25,10 +41,8 @@ export default function ProtectedRouteDemo() {
       />
       <div className="task-workspace">
         <div className="stack">
-          <div className="row">
-            {/* TODO: nav buttons that call setCurrentPage(...) */}
-          </div>
-          {/* TODO: render the component for currentPage */}
+          {display}
+            
         </div>
       </div>
     </div>
