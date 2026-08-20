@@ -10,8 +10,9 @@ const requirements = [
 import { useToggle } from '../../hooks/useToggle.js';
 
 export default function UseToggle() {
-  // TODO: call useToggle(...) once you've implemented it in src/hooks/useToggle.js
-  // const value = useToggle(...);
+  
+  const [buttonClicked, toggleButton] = useToggle(false);
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +23,8 @@ export default function UseToggle() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+          <button onClick={toggleButton}>Click</button>
+          {buttonClicked ? <p>button clicked</p> : <p>not clicked</p>}
         </div>
       </div>
     </div>

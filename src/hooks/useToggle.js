@@ -1,4 +1,9 @@
-// TODO: implement useToggle
-export function useToggle(/* args */) {
-  // TODO
+import { useState } from 'react'
+
+export function useToggle(initialValue) {
+  const [value, setValue] = useState(initialValue);
+  
+  const toggle = ()=>setValue(prev=>!prev)
+
+  return [value, toggle];
 }
