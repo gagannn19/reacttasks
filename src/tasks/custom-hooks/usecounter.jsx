@@ -12,6 +12,7 @@ import { useCounter } from '../../hooks/useCounter.js';
 export default function UseCounter() {
   // TODO: call useCounter(...) once you've implemented it in src/hooks/useCounter.js
   // const value = useCounter(...);
+  const [value, increament, decreament, reset] = useCounter(10);
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +23,10 @@ export default function UseCounter() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+          <p>{value}</p>
+          <button onClick={increament}>+</button>
+          <button onClick={decreament}>-</button>
+          <button onClick={reset}>reset</button>
         </div>
       </div>
     </div>
