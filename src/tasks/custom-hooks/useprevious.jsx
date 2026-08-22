@@ -8,10 +8,15 @@ const requirements = [
   "Demo shows current vs previous value side by side"
 ];
 import { usePrevious } from '../../hooks/usePrevious.js';
+import { useState } from 'react';
 
 export default function UsePrevious() {
-  // TODO: call usePrevious(...) once you've implemented it in src/hooks/usePrevious.js
-  // const value = usePrevious(...);
+  
+  const [num, setNum] = useState(0);
+  const [current, setCurrent] = useState(0);
+  const previous = usePrevious(current);
+
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +27,12 @@ export default function UsePrevious() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+          <label>
+            Enter Any Number here :- <input type='number' value={num} onChange={(event)=>setNum(Number(event.target.value))}></input>
+            <button onClick={()=>setCurrent(num)}>Save</button>
+          </label>
+          {previous}
+          
         </div>
       </div>
     </div>
