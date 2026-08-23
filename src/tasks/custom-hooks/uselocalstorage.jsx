@@ -10,8 +10,9 @@ const requirements = [
 import { useLocalStorage } from '../../hooks/useLocalStorage.js';
 
 export default function UseLocalStorage() {
-  // TODO: call useLocalStorage(...) once you've implemented it in src/hooks/useLocalStorage.js
-  // const value = useLocalStorage(...);
+
+  const [value, setValue] = useLocalStorage("name", "Gagan");
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +23,10 @@ export default function UseLocalStorage() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+          {value}
+          <button onClick={() => setValue("Mohan")}>
+            Change
+          </button>
         </div>
       </div>
     </div>
