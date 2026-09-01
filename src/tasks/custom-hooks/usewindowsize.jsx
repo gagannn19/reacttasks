@@ -11,7 +11,7 @@ import { useWindowSize } from '../../hooks/useWindowSize.js';
 
 export default function UseWindowSize() {
   // TODO: call useWindowSize(...) once you've implemented it in src/hooks/useWindowSize.js
-  // const value = useWindowSize(...);
+  const {height, width} = useWindowSize();
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +22,8 @@ export default function UseWindowSize() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+          <p>Height :- </p>{height}
+          <p> Width :- </p>{width}
         </div>
       </div>
     </div>
