@@ -8,10 +8,13 @@ const requirements = [
   "Demo shows both the raw and debounced value side by side"
 ];
 import { useDebounce } from '../../hooks/useDebounce.js';
+import { useState } from 'react';
 
 export default function UseDebounce() {
-  // TODO: call useDebounce(...) once you've implemented it in src/hooks/useDebounce.js
-  // const value = useDebounce(...);
+
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 1000);
+  
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +25,11 @@ export default function UseDebounce() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+           
+           <label>
+              Search :- <input type='text' value={search} onChange={(event)=>setSearch(event.target.value)}></input>
+           </label>
+            {debouncedSearch}
         </div>
       </div>
     </div>
