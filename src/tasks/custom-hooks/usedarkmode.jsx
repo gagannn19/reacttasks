@@ -10,8 +10,9 @@ const requirements = [
 import { useDarkMode } from '../../hooks/useDarkMode.js';
 
 export default function UseDarkMode() {
-  // TODO: call useDarkMode(...) once you've implemented it in src/hooks/useDarkMode.js
-  // const value = useDarkMode(...);
+
+  const { isDark, toggleDarkMode } = useDarkMode();
+
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +23,11 @@ export default function UseDarkMode() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+
+          <div style={{background:isDark?"black" : "white"}}>
+            <button style={{color:isDark?"white":"black", background:isDark?"black":"white"}} onClick={()=>{toggleDarkMode(true)}}>DARK MODE</button>
+          </div>
+
         </div>
       </div>
     </div>
