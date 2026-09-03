@@ -10,8 +10,8 @@ const requirements = [
 import { useClipboard } from '../../hooks/useClipboard.js';
 
 export default function UseClipboard() {
-  // TODO: call useClipboard(...) once you've implemented it in src/hooks/useClipboard.js
-  // const value = useClipboard(...);
+
+  const {copied, copy} = useClipboard();
   return (
     <div className="task-page">
       <TaskInfo
@@ -22,8 +22,9 @@ export default function UseClipboard() {
       />
       <div className="task-workspace">
         <div className="stack">
-          {/* TODO: use the hook's return value in this demo UI */}
-          <p>Your code here.</p>
+          
+          <button onClick={()=>copy("hello world")}>Copy</button>
+          <p>{copied ? "copied" : "not copied"}</p>
         </div>
       </div>
     </div>
